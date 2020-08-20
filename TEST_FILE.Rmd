@@ -40,6 +40,8 @@ knitr::opts_chunk$set(error = TRUE)
 ```{r}
 rm(list = ls())
 set.seed(12) # feel free to modify once you get the code working
+library(bars) #crucial step in calling the package
+library(mvtnorm) #this line is necessary...for now
 n <- 300
 x <- seq(0,1,length.out=n)
 y <- sin(2*pi*x^2)*10+rnorm(n)
@@ -53,8 +55,6 @@ Feel free to play around with the data and modify however you like once you get 
 # Bayesian Spline with Random Knots
 
 ```{r}
-library(bars) #crucial step in calling the package
-library(mvtnorm) #this line is necessary...for now
 nmcmc <- 5000
 res <- bars(its = nmcmc, verbose = TRUE)
 ```
