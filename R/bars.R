@@ -128,7 +128,7 @@ bars <- function(its, max_knot = 200, verbose = FALSE) {
 
     if(verbose == TRUE) {
       if(it %% 1000 == 0) {
-        cat("Iteration number", it, "\t")
+        cat("Iteration", it, "\t")
         cat("sigma^2 =",mat_sig[it],"\n")
       }
     }

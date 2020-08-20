@@ -1,0 +1,112 @@
+---
+title: "BARS Package Test Output"
+author: "Developed by Andy Shen"
+output:
+  pdf_document: default
+---
+
+# Introduction and Installation
+
+Hello! Thank you for taking the time to test the `bars` package in R. This package lays out the foundation for Bayesian Adaptive Regression Splines, a common tool used to fit nonlinear data from a Bayesian perspective. This algorithm utilizes various MCMC techniques, such as Reversible-Jump algorithms and Gibbs sampling to adaptively predict the optimal number of knots and their locations without overfitting the data. I am still writing the Vignette and will upload it to the repository when it is completed.
+
+Please run the code below and ensure all outputs appear exactly as the file `TEST_FILE.pdf` which can be found on the GitHub repository for this project: https://github.com/aashen12/BARS. In its entirety, the file should take around 1 minute to run completely, depending on your processor speed.
+
+If you encounter any errors that you cannot fix after multiple attempts, please send me a screenshot of the full error message as well as the entire pdf/Rmd file with the error. You can email me (Andy) at aashen@ucla.edu. Please do not hesitate to email me if you have any questions as well.
+
+Thanks again, and enjoy!
+
+To install the `bars` package, please run the following command in your RStudio console:
+
+```{r, eval=FALSE}
+devtools::install_github("aashen12/BARS") # only run this command once
+```
+
+
+\pagebreak
+
+# Your name here
+
+# Data Generation
+
+```{r setup, include=FALSE}
+# Do not modify this code
+# devtools::load_all()
+# devtools::install()
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
+```{r}
+rm(list = ls())
+set.seed(12) # feel free to modify once you get the code working
+n <- 300
+x <- seq(0,1,length.out=n)
+y <- sin(2*pi*x^2)*10+rnorm(n)
+plot(x, y)
+```
+
+Feel free to play around with the data and modify however you like once you get this code working.
+
+\pagebreak
+
+# Bayesian Spline with Random Knots
+
+```{r, error=TRUE}
+library(bars) #crucial step in calling the package
+library(mvtnorm) #this line is necessary...for now
+nmcmc <- 5000
+res <- bars(its = nmcmc, verbose = TRUE)
+```
+
+
+```{r, warning=FALSE}
+beta <- res$beta
+beta <- beta[,colSums(is.na(beta)) != nrow(beta)]
+round(beta[nrow(beta),], 2)
+
+sig <- res$sig
+tail(sig)
+
+knots <- res$knots
+knots <- knots[,colSums(is.na(knots)) != nrow(knots)] 
+round(knots[nrow(knots),], 2)
+
+signs <- res$signs
+signs <- signs[,colSums(is.na(signs)) != nrow(signs)]
+round(signs[nrow(signs),], 2)
+
+X <- res$X
+tail(X)
+
+res$knots_total
+```
+
+\pagebreak
+
+# Plotting Predicted Values
+
+```{r}
+knotnum <- ncol(knots)
+mean.pred <- matrix(NA, nrow = nmcmc, ncol = length(x))
+pred <- mean.pred
+for(p in 1:nmcmc) {
+  splb <- spline.basis(nknot = knotnum, knots = knots[p,], signs = signs[p,])
+  mean.pred[p,] <- splb %*% beta[p,]
+  pred[p,] <- mean.pred[p,] + rnorm(length(x), sd = sqrt(sig[p])) 
+}
+mean.pred <- t(mean.pred)
+```
+
+```{r}
+pred_adj <- t(apply(pred, 2, quantile, probs = c(0.025, 0.975), na.rm = TRUE))
+matplot(x, pred_adj, col = "lightgrey", lwd = 5, type = "l")
+matplot(x, mean.pred, type = "l", lwd = 9, add = TRUE)
+points(x, y)
+```
+
+```{r}
+plot(x, rowMeans(mean.pred, na.rm = TRUE), lwd = 8, type = "l", col = "royalblue")
+points(x, y)
+```
+
