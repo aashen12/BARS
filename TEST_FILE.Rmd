@@ -7,7 +7,7 @@ output:
 
 # Introduction and Installation
 
-Hello! Thank you for taking the time to test the `bars` package in R. This package lays out the foundation for Bayesian Adaptive Regression Splines, a common tool used to fit nonlinear data from a Bayesian perspective. This algorithm utilizes various MCMC techniques, such as Reversible-Jump algorithms and Gibbs sampling to adaptively predict the optimal number of knots and their locations without overfitting the data. I am still writing the Vignette and will upload it to the repository when it is completed.
+Hello! Thank you for taking the time to test the `bars` package in R. This package lays out the foundation for Bayesian Adaptive Regression Splines, a common tool used to fit nonlinear data from a Bayesian perspective. This algorithm utilizes various MCMC techniques, such as Reversible-Jump algorithms and Gibbs sampling to adaptively learn the optimal number of knots and their locations without overfitting the data. I am still writing the Vignette and will upload it to the repository when it is completed.
 
 Please run the code below and ensure all outputs appear exactly as the file `TEST_FILE.pdf` which can be found on the GitHub repository for this project: https://github.com/aashen12/BARS. In its entirety, the file should take around 1 minute to run completely, depending on your processor speed.
 
