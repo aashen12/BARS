@@ -1,11 +1,11 @@
 Package: bars
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Bayesian Adaptive Regression Splines
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Andy Shen, Devin Francom
+Maintainer: Andy Shen <aashen100@gmail.com>
+Description: Fits a bayesian adaptive regression spline for univariate data, assuming
+    a Gaussian likelihood, using priors specified in the Vignette.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
