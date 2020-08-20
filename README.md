@@ -1,6 +1,6 @@
 # BARS
 Bayesian Adaptive Regression Splines
 
-Bayesian Univariate Adaptive Regression Splines with Reversible-Jump Monte Carlo sampling.
+R package to fit a Bayesian Univariate Adaptive Regression Spline using Reversible-Jump Monte Carlo sampling.
 
 Authors: Andy Shen, Devin Francom
