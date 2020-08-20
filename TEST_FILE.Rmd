@@ -52,34 +52,54 @@ Feel free to play around with the data and modify however you like once you get 
 
 # Bayesian Spline with Random Knots
 
-```{r, error=TRUE}
+```{r}
 library(bars) #crucial step in calling the package
 library(mvtnorm) #this line is necessary...for now
 nmcmc <- 5000
 res <- bars(its = nmcmc, verbose = TRUE)
 ```
 
+# Results
 
-```{r, warning=FALSE}
+## Beta
+
+```{r}
 beta <- res$beta
 beta <- beta[,colSums(is.na(beta)) != nrow(beta)]
 round(beta[nrow(beta),], 2)
+```
 
+## Sigma
+
+```{r}
 sig <- res$sig
-tail(sig)
+tail(round(sig, 2))
+```
 
+## Knots
+
+```{r}
 knots <- res$knots
 knots <- knots[,colSums(is.na(knots)) != nrow(knots)] 
 round(knots[nrow(knots),], 2)
+res$knots_total
+```
 
+\pagebreak
+
+## Signs
+
+```{r}
 signs <- res$signs
 signs <- signs[,colSums(is.na(signs)) != nrow(signs)]
 round(signs[nrow(signs),], 2)
+```
 
+# Basis Functions
+
+```{r}
 X <- res$X
-tail(X)
-
-res$knots_total
+tail(round(X, 2))
 ```
 
 \pagebreak
@@ -104,6 +124,10 @@ matplot(x, pred_adj, col = "lightgrey", lwd = 5, type = "l")
 matplot(x, mean.pred, type = "l", lwd = 9, add = TRUE)
 points(x, y)
 ```
+
+\pagebreak
+
+# Plot of Averages
 
 ```{r}
 plot(x, rowMeans(mean.pred, na.rm = TRUE), lwd = 8, type = "l", col = "royalblue")
