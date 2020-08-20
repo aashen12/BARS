@@ -2,3 +2,5 @@
 Bayesian Adaptive Regression Splines
 
 Bayesian Univariate Adaptive Regression Splines with Reversible-Jump Monte Carlo sampling.
+
+Authors: Andy Shen, Devin Francom
